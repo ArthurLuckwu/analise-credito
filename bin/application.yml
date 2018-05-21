@@ -1,0 +1,71 @@
+#How to change log level example
+logging:
+  level:
+    org.springframework.security: debug
+ 
+flyway:
+    validate-on-migrate: true
+    out-of-order: true
+    locations:
+      - classpath:/db/migration
+    check-location: true
+    enabled: true
+    schemas:
+      - public
+endpoints:
+  flyway:
+    enabled: true
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+#  resources:
+#    add-mappings: false
+  mvc:
+    favicon:
+      enabled: false
+  datasource:
+    url: ${DB_CONNECTION_URL:jdbc:postgresql://127.0.0.1:5432/credito}
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
+    max-active: 20
+    max-idle: 15
+    min-idle: 10
+    initial-size: 5
+    test-on-borrow: false
+    test-on-return: true
+    connection-test-query: select true
+#    jndi-name: 
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      use-new-id-generator-mappings: true
+      ddl-auto: none #create, update, none 
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    show-sql: true
+  resources:
+    chain:
+      html-application-cache: true
+      enabled: true
+      cache: true
+    cache-period: 604800 # 1 week
+
+security:
+  headers:
+    cache: true
+
+server:
+  session:  # 30 minutes session
+    timeout: 1800      
+  port: 8080
+  
+
+
+ 

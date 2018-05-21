@@ -1,58 +1,30 @@
 # desafio-analise-credito
 
-### Desafio Conductor de Seleção 
-Olá, queremos convidá-lo a participar de nosso desafio de seleção.  Pronto para participar? Seu trabalho será visto por nosso time e você receberá ao final um feedback sobre o que achamos do seu trabalho. Não é legal?
+O sistema se encontra hospedado no endereço: "https://analise-credito.herokuapp.com".
 
-### Sobre a oportunidade 
-A vaga é para Desenvolvedor Java, temos vagas com diversos níveis de senioridade e para cada um deles utilizaremos critérios específicos considerando esse aspecto, combinado? 
-Se você for aprovado nesta etapa, será convidado para uma entrevista final com nosso time técnico.
+Há dois usuários no sistema:
+ - usuario: analista@cdt.com.br | senha: abcd1234;
+ - usuario: captacao@cdt.com.br | senha: abcd1234;
 
-### Desafio Técnico
-  Desenvolver um sistema de análise de crédito para novos portadores de cartão, onde devemos ter usuários com dois tipos de permissão, sendo eles:
-    * Usuário de captação de propostas de novos cartões: este usuário será responsável pelo cadastro de novos portadores de cartão.  Após o cadastro dos portadores, este usuário terá permissão apenas de verificar o resultado das análises realizadas pelos analistas.
-    * Usuário analista de crédito: este usuário será responsável por verificar as propostas cadastradas, podendo aprovar ou negar a concessão de crédito. O resultado da análise será disponibilizado para o usuário de captação de proposta.
-    
-  - Dicionário:
-    ```
-    * Portador de cartão: toda pessoa que tem sua análise de crédito aprovada.
-    * Análise de crédito: o processo pelo qual o analista verifica documentos, spc e quaisquer dados disponíveis para concessão de crédito.
-    ```
-    
-  - Pré-requisitos:
-    ```
-    * Utilização do SGBD Oracle, MySQL ou Postgres.
-    * JDK 1.8+
-    * Maven 3+ (ou gradle,  ou afins)
-    * JUnit 4+
-    * Framework Web a critério (Servlets, JSF, Spring MVC ou afins, preferencialmente Angular)
-    * Criação de um DUMP com massa de dados.
-    ```
+O sistema hospedado está com banco de dados povoado. O dump do mesmo se encontra na raíz do projeto com o nome "dump.backup";
 
-  - O que esperamos como escopo:
-    ```
-    * Adicionar e Manter propostas de crédito;
-    * Consultar propostas de crédito, por filtros de dados;
-    * Painel de análise de crédito, contendo todos os clientes cadastrados mas que não foram analisados ainda;
-    * Perfils diferentes para o usuário que realiza a captação da proposta e o usuário que realiza a análise;
-    ```
-  - O que não esperamos como escopo:
-    ```
-    * Fluxo de geração de cartão
-    * Qualquer fluxo realizado após a aprovação ou reprovação da proposta
-    ```
-  
-  - O que vamos avaliar:
-    ```
-    * Seu código; 
-    * Organização;
-    * Boas práticas;
-    ```
+Para executar o sistema localmente é necessário possuir o banco de dados Postgresql instalado com uma base de dados criada com o nome "credito".
+Para rodar o sistema deve-se apenas executar o comando "gradle bootrun" na raíz do projeto, após o servidor iniciar pode-se acessar a aplicação web através do endereço "localhost:8080".
 
-### Instruções
-      1. Faça o fork do desafio e crie uma branch 'desafio_analise_credito';
-      2. Desenvolva. Você terá 3 (três) dias a partir da data do envio do desafio; 
-      3. Após concluir seu trabalho faça um push; 
-      4. Crie um arquivo de texto com a nomenclatura README.MD com a explicação de como devemos executar o 
-        projeto e com uma descrição do que foi feito; 
-      5. Solicite o Merge request para o repositório original e que a força esteja com você.
-      6. Em caso de dúvidas relacionadas a negócio, pode entrar em contato com o recrutador.
+O backend do sistema foi construído utilizando o framework SpringBoot, em sua versão 1.5.7.RELEASE, e fornece APIs REST.
+O frontend do sistema foi construído utilizando o framework Angular, em sua versão 5.0.
+O banco de dados utilizado é o PostgreSql 9.6.8.
+O JDK utilizado foi o 1.8.
+O sistema de automatização de builds utilizado foi o Gradle, em sua versão 4.3.1.
+O SpringBoot utiliza o "spring-boot-starter-test", que faz uso do JUnit 4.12.
+
+O sistema possui autenticação através de usuário e senha, e token para acessar as APIs. Na tela de login o usuário deve inserir suas credenciais (email e senha), assim como também preencher um campo de captcha para ter acesso ao sistema.
+
+O usuário de captação tem acesso ao cadastro dos portadores de crédito que serão analisados e acesso a listagem e consulta dos portadores de crédito apenas que já foram analisados.
+
+O usuário de análise tem acesso à listagem dos portadores de crédito cadastrados e que estão à espera da análise de crédito, e também acesso à funcionalidade de análise de crédito dos portadores.
+
+Foi utilizado o Swagger para gerar a documentação das APIs. Esse serviço pode ser encontrado em "http://analise-credito.herokuapp.com/swagger-ui.html#/" e também rodando localmente por "localhost:8080/swagger-ui.html#/".
+
+
+ 

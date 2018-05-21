@@ -1,0 +1,63 @@
+<h2 class="page-title">Consultar Portador de Crédito</h2>
+<div class="form compact">
+  <section>
+    <div class="row">
+      <div class="col-lg-6 col-md-10 col-sm-12 col-xs-12">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" placeholder="Nome" size="80" (keypress)="enterSearch($event)" [(ngModel)]="searchParams.nome" #nameInput="ngModel">
+        </div>
+        <div class="form-group">
+          <label for="cpf">Cpf</label>
+          <input type="text" id="cpf" placeholder="Cpf" (keypress)="enterSearch($event)" [(ngModel)]="searchParams.cpf" #nameInput="ngModel" [textMask]="{mask: cpfMask, guide: true}">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<clr-datagrid class="full-height-datagrid" (clrDgRefresh)="search($event)" [clrDgLoading]="loading" [(clrDgSingleSelected)]="selectedItem"
+  [clDgRowSelection]="true">
+  <clr-dg-placeholder>Nenhum Registro Encontrado</clr-dg-placeholder>
+  <clr-dg-action-bar>
+    <clr-button-group class="btn-primary">
+      <clr-button class="btn btn-sm" (click)="search(null)">
+        <clr-icon shape="search"></clr-icon>
+        Buscar
+      </clr-button>
+      <clr-button class="btn btn-sm" (click)="analisar()" *ngIf="permissaoAnalisar()" [disabled]="selectedItem === null">
+        <clr-icon shape="pencil"></clr-icon>
+        Analisar
+      </clr-button>
+      <clr-button class="btn btn-sm" (click)="detalhes()" *ngIf="!permissaoAnalisar()" [disabled]="selectedItem === null">
+        <clr-icon shape="info-standard"></clr-icon>
+        Detalhes
+      </clr-button>
+    </clr-button-group>
+  </clr-dg-action-bar>
+
+  <clr-dg-column>Nome</clr-dg-column>
+  <clr-dg-column>Cpf</clr-dg-column>
+
+  <clr-dg-row *clrDgItems="let portador of responsePortador" [clrDgItem]="portador">
+    <clr-dg-cell>{{portador.nome}}</clr-dg-cell>
+    <clr-dg-cell>{{formatCpf(portador.cpf)}}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgTotalItems]="total">
+      {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} de {{total}} portadores
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+
+<!-- <clr-modal [(clrModalOpen)]="showDeleteDialog">
+  <h3 class="modal-title">Excluir</h3>
+  <div class="modal-body">
+    <p>Tem certeza que deseja excluir?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="showDeleteDialog = false">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="delete()">Excluir</button>
+  </div>
+</clr-modal> -->

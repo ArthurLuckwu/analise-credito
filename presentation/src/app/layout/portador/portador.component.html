@@ -1,0 +1,46 @@
+<clr-main-container>
+  <clr-header>
+    <div class="branding">
+      <a href="#" class="nav-link">
+        <span class="clr-icon clr-clarity-logo"></span>
+        <span class="title">Sistema de Análise de Crédito</span>
+      </a>
+    </div>
+    <div class="header-nav" [clr-nav-level]="1">
+      <a class="nav-link" href="#" [routerLink]="['/portador']" routerLinkActive="active">
+        <span class="nav-text">Portador de Crédito</span>
+      </a>
+    </div>
+    <div class="header-actions">
+        <clr-dropdown>
+          <button class="nav-text" clrDropdownToggle>
+            {{ usuarioLogado }}
+            <clr-icon shape="caret down"></clr-icon>
+          </button>
+          <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+            <button type="button" (click)="logout()" clrDropdownItem>
+              Sair
+            </button>
+          </clr-dropdown-menu>
+        </clr-dropdown>
+      </div>
+  </clr-header>
+
+
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/portador/consulta-portador']" routerLinkActive="active">Consulta</a>
+      </li>
+      <li class="nav-item" *ngIf="permissao()">
+        <a class="nav-link" href="#" [routerLink]="['/portador/cadastro-portador']" routerLinkActive="active">Cadastro</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="content-container">
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</clr-main-container>

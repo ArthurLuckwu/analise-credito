@@ -1,0 +1,125 @@
+<h2 class="page-title">Cadastro de Portador de Crédito</h2>
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div class="row">
+    <section class="form-block col-lg-12 col-md-12 col-sm-12">
+      <div class="form-group">
+        <label for="nome" class="required">Nome</label>
+        <label for="nome" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('nome').invalid && (form.get('nome').dirty || form.get('nome').touched)">
+          <input type="text" id="nome" size="30" placeholder="Nome" required maxlength="80" minlength="4" formControlName="nome" autofocus>
+          <span class="tooltip-content">
+            O Nome é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="cpf" class="required">CPF</label>
+        <label for="cpf" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('cpf').invalid && (form.get('cpf').dirty || form.get('cpf').touched)">
+          <input type="text" id="cpf" size="14" placeholder="CPF" required maxlength="15" formControlName="cpf" [textMask]="{mask: cpfMask, guide: true}"
+            autofocus>
+          <span class="tooltip-content">
+            O CPF é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="email" class="required">Email</label>
+        <label for="email" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)">
+          <input type="email" id="email" size="100" placeholder="Email" required maxlength="100" formControlName="email" autofocus>
+          <span class="tooltip-content">
+            O Email é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="rua" class="required">Rua</label>
+        <label for="rua" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('rua').invalid && (form.get('rua').dirty || form.get('rua').touched)">
+          <input type="text" id="rua" size="100" placeholder="Rua" required maxlength="100" formControlName="rua" autofocus>
+          <span class="tooltip-content">
+            A Rua é obrigatória.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="bairro" class="required">Bairro</label>
+        <label for="bairro" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('bairro').invalid && (form.get('bairro').dirty || form.get('bairro').touched)">
+          <input type="text" id="bairro" size="60" placeholder="Bairro" required maxlength="60" formControlName="bairro" autofocus>
+          <span class="tooltip-content">
+            O Bairro é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="numero" class="required">Número</label>
+        <label for="numero" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('numero').invalid && (form.get('numero').dirty || form.get('numero').touched)">
+          <input type="text" id="numero" size="6" placeholder="Número" required maxlength="100" formControlName="numero" autofocus>
+          <span class="tooltip-content">
+            O Número é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="complemento">Complemento</label>
+        <label for="complemento" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('complemento').invalid && (form.get('complemento').dirty || form.get('complemento').touched)">
+          <input type="text" id="complemento" size="100" placeholder="Complemento" maxlength="100" formControlName="complemento" autofocus>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="cep" class="required">CEP</label>
+        <label for="cep" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('cep').invalid && (form.get('cep').dirty || form.get('cep').touched)">
+          <input type="text" id="cep" size="9" placeholder="CEP" required maxlength="10" formControlName="cep" [textMask]="{mask: cepMask, guide: true}"
+            autofocus>
+          <span class="tooltip-content">
+            O CEP é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="municipio" class="required">Município</label>
+        <label for="municipio" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('municipio').invalid && (form.get('municipio').dirty || form.get('municipio').touched)">
+          <input type="text" id="municipio" size="100" placeholder="Município" required maxlength="100" formControlName="municipio"
+            autofocus>
+          <span class="tooltip-content">
+            O Município é obrigatório.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="uf" class="required">UF</label>
+        <label for="uf" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('uf').invalid && (form.get('uf').dirty || form.get('uf').touched)">
+          <input type="text" id="uf" size="2" placeholder="UF" required maxlength="2" formControlName="uf" autofocus>
+          <span class="tooltip-content">
+            A UF é obrigatória.
+          </span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="dividaSerasa">Dívida Serasa</label>
+        <label for="dividaSerasa" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('dividaSerasa').invalid && (form.get('dividaSerasa').dirty || form.get('dividaSerasa').touched)">
+          <input currencyMask type="text" id="dividaSerasa" size="15" formControlName="dividaSerasa" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            autofocus>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="dividaSpc">Dívida SPC</label>
+        <label for="dividaSpc" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('dividaSpc').invalid && (form.get('dividaSpc').dirty || form.get('dividaSpc').touched)">
+          <input currencyMask type="text" id="dividaSpc" size="15" formControlName="dividaSpc" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            autofocus>
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="dividaCartorio">Dívida Cartório</label>
+        <label for="dividaCartorio" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="form.get('dividaCartorio').invalid && (form.get('dividaCartorio').dirty || form.get('dividaCartorio').touched)">
+          <input currencyMask type="text" id="dividaCartorio" size="15" formControlName="dividaCartorio" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            autofocus>
+        </label>
+      </div>
+    </section>
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+    <clr-icon shape="check"></clr-icon>
+    Salvar
+  </button>
+  <button class="btn" routerLink="/portador">
+    Cancelar
+  </button>
+</form>

@@ -1,0 +1,29 @@
+<clr-main-container>
+    <div class="login-wrapper">
+        <form class="login">
+            <label class="title">
+                <h3 class="welcome">Bem vindo ao</h3>
+                Sistema de Análise de Crédito
+                <h5 class="hint">Use seu e-mail e senha para entrar
+                </h5>
+            </label>
+            <clr-alert [clrAlertType]="'alert-danger'" *ngIf="loginErrorMessage" (clrAlertClosedChange)="onAlertClose()">
+                <div clr-alert-item class="alert-item">
+                    <span class="alert-text">
+                        Usuário ou Senha incorretos
+                    </span>
+                </div>
+            </clr-alert>
+            <div class="login-group">
+                <input (keypress)="enterLogin($event)" class="username" [(ngModel)]="username" type="text" name="login_username" placeholder="E-mail">
+                <input (keypress)="enterLogin($event)" class="password" [(ngModel)]="password" type="password" name="login_password" placeholder="Senha">
+                <br>
+                <img src="{{captchaImage}}" />
+                <br>
+                <input id="textCaptcha" name="textCaptcha" (keypress)="enterLogin($event)" type="text" placeholder="Informe os caracteres da imagem acima" autocomplete="off"
+                required class="form-control" [(ngModel)]="valorCaptcha">
+                <button type="button" [clrLoading]="isLogging" (click)="doLogin()" class="btn btn-primary">Entrar</button>
+            </div>
+        </form>
+    </div>
+</clr-main-container>

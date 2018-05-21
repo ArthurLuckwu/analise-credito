@@ -1,0 +1,165 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
+		classpath("com.moowork.gradle:gradle-node-plugin:1.2.0")
+	}
+}
+
+plugins {
+  id "com.moowork.node" version "1.2.0"
+}
+
+apply plugin: 'war'
+apply plugin: "com.moowork.node"
+
+allprojects {
+    apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'eclipse-wtp'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	group = 'com.cdt.credito'
+    version = "0.1-SNAPSHOT"
+
+	eclipse {
+	    classpath {
+	        downloadJavadoc = true
+	        downloadSources = true
+	    }
+	}
+}
+
+//subprojects {
+//	archivesBaseName = "cdt-${name}"
+//    apply from: rootProject.file('common.gradle')
+//}
+
+war {
+	baseName = 'credito'
+	archiveName = "${war.baseName}##${version}.war"
+}
+
+springBoot {
+	executable = true
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile "io.springfox:springfox-swagger2:2.5.0"
+	compile "io.springfox:springfox-bean-validators:2.5.0"
+	compile 'io.springfox:springfox-swagger-ui:2.5.0'
+	compile "io.swagger:swagger-annotations:1.5.9"
+	
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-actuator-docs')
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile('org.springframework.retry:spring-retry')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-validation')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.springframework.session:spring-session')
+
+	compile('org.hibernate:hibernate-java8')
+
+	compile('org.flywaydb:flyway-core')
+
+	runtime('org.postgresql:postgresql')
+	compile('org.projectlombok:lombok')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	
+	compile("com.github.axet:kaptcha:0.0.9")
+	compile("org.passay:passay:1.1.0")
+
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	
+	compile('org.audit4j:audit4j-core:2.4.1') {
+	    exclude group: 'commons-io'
+	    exclude group: 'javassist'
+	    exclude group: 'javax.servlet'
+	}
+	compile('org.audit4j:audit4j-spring:2.4.1')
+	compile('org.audit4j:audit4j-db:2.4.1')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	testCompile('org.springframework.security:spring-security-test')
+	
+}
+
+// Standardize the line break of Flyway SQL files 
+import org.apache.tools.ant.filters.FixCrLfFilter
+afterEvaluate {
+    configure(allProcessResourcesTasks()) {
+    	filesMatching('**/*.sql') {
+	        filter(FixCrLfFilter, 
+		            eol: FixCrLfFilter.CrLf.newInstance('lf'),
+		            tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+		            eof: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+		            fixlast: false)
+	    }
+    }
+}
+
+def allProcessResourcesTasks() {
+    sourceSets*.processResourcesTaskName.collect {
+        tasks[it]
+    }
+}
+
+node {
+  version = "7.10.1"
+  download = true
+  nodeModulesDir = file("presentation")
+}
+
+task buildClientDev(type: NpmTask, dependsOn: 'npmInstall') {
+  group = 'build'
+  description = 'Compile client side folder for development'
+  args = ['run', 'buildDev']
+}
+
+task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall') {
+  group = 'application'
+  description = "Build and watches the client side assets for rebuilding"
+  args = ['run', 'buildWatch']
+}
+
+task buildClient(type:NpmTask, dependsOn:'npmInstall') {
+  group = 'build'
+  description = "Compile client side folder for production"
+  args = ['run', 'build', 'npmInstall']
+}
+
+
+
+bootRun.dependsOn(buildClientDev)
+
+processResources.dependsOn(buildClient)
+
+// Gradle embarcado
+task wrapper(type: Wrapper) {
+	gradleVersion = '3.5.1'
+}
